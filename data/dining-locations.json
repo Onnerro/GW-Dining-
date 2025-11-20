@@ -12,6 +12,7 @@
     "description": "Kosher-friendly café at GW Hillel featuring classic zinger sandwiches and quick bites.",
     "rating": 4.4,
     "reviews": 52,
+    "image": "gw-zingers.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -41,6 +42,7 @@
     "description": "Just-walk-out technology market with snacks, drinks, and fresh items for Mount Vernon students.",
     "rating": 4.2,
     "reviews": 38,
+    "image": "ames-market.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -70,6 +72,7 @@
     "description": "Popular Chinese-inspired fast casual restaurant offering bowls, plates, and shareable entrees.",
     "rating": 4.1,
     "reviews": 64,
+    "image": "panda-express.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -99,6 +102,7 @@
     "description": "Vibrant Indian street food with build-your-own bowls, chaats, and curries in the Student Center.",
     "rating": 4.3,
     "reviews": 71,
+    "image": "chaat-house.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -128,6 +132,7 @@
     "description": "Classic Chick-fil-A location offering chicken sandwiches, nuggets, salads, and breakfast favorites.",
     "rating": 4.4,
     "reviews": 112,
+    "image": "Chick-fil-a.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -157,6 +162,7 @@
     "description": "Multi-concept food hall featuring several local and national brands with flexible seating.",
     "rating": 4.2,
     "reviews": 89,
+    "image": "District_house.png",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -186,6 +192,7 @@
     "description": "Crispy chicken sandwiches, tenders, and wings served with bold sauces and sides.",
     "rating": 4.0,
     "reviews": 45,
+    "image": "absurd-bird.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -215,6 +222,7 @@
     "description": "Quiet café in Ross Hall serving espresso drinks, pastries, and grab-and-go options.",
     "rating": 4.2,
     "reviews": 56,
+    "image": "the-bistro.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -244,6 +252,7 @@
     "description": "Campus coffee and tea bar with specialty drinks and light snacks on the Vern.",
     "rating": 4.3,
     "reviews": 41,
+    "image": "buff-and-brew.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -273,6 +282,7 @@
     "description": "All-you-care-to-eat dining with multiple concepts including sushi, bowls, and grill stations.",
     "rating": 4.5,
     "reviews": 127,
+    "image": "Shenkman-hall.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -302,6 +312,7 @@
     "description": "Dining hall with multiple stations including deli, grill, salads, and desserts.",
     "rating": 4.3,
     "reviews": 89,
+    "image": "Thurston-hall.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -331,6 +342,7 @@
     "description": "Dining hall on the Mount Vernon campus with multiple concepts and Grill 202.",
     "rating": 4.1,
     "reviews": 56,
+    "image": "pelham-commons.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -360,6 +372,7 @@
     "description": "Halal dining station offering shawarma, kebabs, and rice bowls with customizable toppings.",
     "rating": 4.6,
     "reviews": 73,
+    "image": "halal-shack.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -389,6 +402,7 @@
     "description": "Central campus food court with multiple vendors and flexible dining options.",
     "rating": 3.9,
     "reviews": 112,
+    "image": "usc-dining.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -418,6 +432,7 @@
     "description": "Coffee, light meals, and grab-and-go options for SMHS students, faculty, and staff.",
     "rating": 4.2,
     "reviews": 34,
+    "image": "rosss-hall.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -447,6 +462,7 @@
     "description": "Kosher dining facility with traditional Jewish cuisine and options for dietary restrictions.",
     "rating": 4.7,
     "reviews": 41,
+    "image": "gw-hillel.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",

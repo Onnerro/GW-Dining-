@@ -768,7 +768,15 @@ function renderLocationCards(items) {
       return `
         <div class="col-md-4">
           <article class="location-card" data-location-id="${loc.id}">
-            <div class="location-card-top"></div>
+            <!-- TOP IMAGE (pulled from images/locations/) -->
+            <div class="ratio ratio-16x9 bg-light">
+              <img
+                src="images/locations/${loc.id}.jpg"
+                alt="${loc.name}"
+                class="w-100 h-100 object-fit-cover"
+                onerror="this.style.display='none';"
+              >
+            </div>
 
             <div class="location-card-body">
               <p class="text-uppercase text-muted small mb-1">${loc.campus}</p>
