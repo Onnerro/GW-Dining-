@@ -1,0 +1,466 @@
+[
+  {
+    "id": "gw-zingers",
+    "name": "GW Zingers",
+    "campus": "Hillel",
+    "type": "Café",
+    "address": "GW Hillel, Lower Level, 2300 H Street NW, Washington, D.C. 20037",
+    "lat": 38.9001,
+    "lng": -77.0438,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 11:00 AM - 9:00 PM\nWeekends: 12:00 PM - 8:00 PM",
+    "description": "Kosher-friendly café at GW Hillel featuring classic zinger sandwiches and quick bites.",
+    "rating": 4.4,
+    "reviews": 52,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Combo Deal",
+      "amount": "10% OFF",
+      "category": "Sandwiches & Café",
+      "details": "10% off any zinger combo for GW students.",
+      "validTimes": "All day",
+      "requiresStudentId": true,
+      "tags": ["Student Discount", "Combo Deal", "All Day"]
+    }
+  },
+  {
+    "id": "ames-market",
+    "name": "Ames Just-Walk-Out Market",
+    "campus": "Mount Vernon",
+    "type": "Grab-and-Go Market",
+    "address": "Ames Hall, 2100 Foxhall Road NW, Washington, D.C. 20007",
+    "lat": 38.9414,
+    "lng": -77.0871,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Daily: 7:00 AM - 11:00 PM",
+    "description": "Just-walk-out technology market with snacks, drinks, and fresh items for Mount Vernon students.",
+    "rating": 4.2,
+    "reviews": 38,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Snack Bundle",
+      "amount": "5% OFF",
+      "category": "Grab & Go",
+      "details": "5% off any 3-item snack bundle purchased with Dining Dollars.",
+      "validTimes": "After 3:00 PM",
+      "requiresStudentId": true,
+      "tags": ["Afternoon Deal", "Dining Dollars", "Limited Time"]
+    }
+  },
+  {
+    "id": "panda-express",
+    "name": "Panda Express",
+    "campus": "Foggy Bottom",
+    "type": "Chinese Fast Casual",
+    "address": "800 22nd Street NW, Washington, D.C. 20052",
+    "lat": 38.9003,
+    "lng": -77.0500,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 11:00 AM - 9:00 PM\nWeekends: 12:00 PM - 8:00 PM",
+    "description": "Popular Chinese-inspired fast casual restaurant offering bowls, plates, and shareable entrees.",
+    "rating": 4.1,
+    "reviews": 64,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Combo Deal",
+      "amount": "25% OFF",
+      "category": "Fast Food",
+      "details": "25% off combo meals during weekday lunch rush (11:00 AM – 2:00 PM).",
+      "validTimes": "Weekdays 11:00 AM – 2:00 PM",
+      "requiresStudentId": true,
+      "tags": ["Combo Deal", "Lunch Special", "Limited Time"]
+    }
+  },
+  {
+    "id": "chaat-house",
+    "name": "Chaat House",
+    "campus": "Foggy Bottom",
+    "type": "Indian Street Food",
+    "address": "University Student Center, 1st Floor, 800 21st Street NW, Washington, D.C. 20052",
+    "lat": 38.8997,
+    "lng": -77.0479,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 11:00 AM - 9:00 PM\nWeekends: 12:00 PM - 8:00 PM",
+    "description": "Vibrant Indian street food with build-your-own bowls, chaats, and curries in the Student Center.",
+    "rating": 4.3,
+    "reviews": 71,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Student Discount",
+      "amount": "12% OFF",
+      "category": "Coffee & Snacks",
+      "details": "12% off any chaat or bowl for students with valid GWorld.",
+      "validTimes": "All day",
+      "requiresStudentId": true,
+      "tags": ["Student Discount", "Spicy Options", "All Day"]
+    }
+  },
+  {
+    "id": "chick-fil-a",
+    "name": "Chick-fil-A",
+    "campus": "Foggy Bottom",
+    "type": "Fast Casual",
+    "address": "514 19th Street NW, Washington, D.C. 20052",
+    "lat": 38.8965,
+    "lng": -77.0425,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 7:00 AM - 10:00 PM\nWeekends: 9:00 AM - 9:00 PM",
+    "description": "Classic Chick-fil-A location offering chicken sandwiches, nuggets, salads, and breakfast favorites.",
+    "rating": 4.4,
+    "reviews": 112,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Breakfast Deal",
+      "amount": "15% OFF",
+      "category": "Fast Food",
+      "details": "15% off breakfast entrées before 10:00 AM for GW students.",
+      "validTimes": "Open – 10:00 AM",
+      "requiresStudentId": true,
+      "tags": ["Breakfast", "Student Discount", "Limited Time"]
+    }
+  },
+  {
+    "id": "district-house",
+    "name": "District House Dining",
+    "campus": "Foggy Bottom",
+    "type": "Food Hall",
+    "address": "2121 H Street NW, B1 Level, Washington, D.C. 20052",
+    "lat": 38.8998,
+    "lng": -77.0482,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 7:00 AM - 11:00 PM\nWeekends: 10:00 AM - 11:00 PM",
+    "description": "Multi-concept food hall featuring several local and national brands with flexible seating.",
+    "rating": 4.2,
+    "reviews": 89,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Group Discount",
+      "amount": "18% OFF",
+      "category": "Food Court",
+      "details": "18% off when ordering for 4 or more people on a single check.",
+      "validTimes": "After 5:00 PM",
+      "requiresStudentId": false,
+      "tags": ["Group Deal", "Food Court", "Multiple Options"]
+    }
+  },
+  {
+    "id": "absurd-bird",
+    "name": "Absurd Bird",
+    "campus": "Foggy Bottom",
+    "type": "Chicken Concept",
+    "address": "University Student Center, 1st Floor, 800 21st Street NW, Washington, D.C. 20052",
+    "lat": 38.8997,
+    "lng": -77.0481,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 11:00 AM - 9:00 PM\nWeekends: 12:00 PM - 8:00 PM",
+    "description": "Crispy chicken sandwiches, tenders, and wings served with bold sauces and sides.",
+    "rating": 4.0,
+    "reviews": 45,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Wing Night",
+      "amount": "15% OFF",
+      "category": "Fast Food",
+      "details": "15% off wings and tenders after 7:00 PM.",
+      "validTimes": "7:00 PM – Close",
+      "requiresStudentId": false,
+      "tags": ["Evening Deal", "Spicy Options", "Limited Time"]
+    }
+  },
+  {
+    "id": "the-bistro",
+    "name": "The Bistro",
+    "campus": "Foggy Bottom",
+    "type": "Coffee & Bistro",
+    "address": "Ross Hall, 1st Floor, 2300 I Street NW, Washington, D.C. 20052",
+    "lat": 38.9009,
+    "lng": -77.0506,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 7:30 AM - 3:00 PM\nWeekends: Closed",
+    "description": "Quiet café in Ross Hall serving espresso drinks, pastries, and grab-and-go options.",
+    "rating": 4.2,
+    "reviews": 56,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Morning Special",
+      "amount": "10% OFF",
+      "category": "Coffee & Snacks",
+      "details": "10% off any coffee + pastry combo before noon.",
+      "validTimes": "Open – 12:00 PM",
+      "requiresStudentId": true,
+      "tags": ["Breakfast", "Coffee", "Student Discount"]
+    }
+  },
+  {
+    "id": "buff-and-brew",
+    "name": "Buff & Brew",
+    "campus": "Mount Vernon",
+    "type": "Coffee & Tea Bar",
+    "address": "Ames Hall, 2100 Foxhall Road NW, Washington, D.C. 20007",
+    "lat": 38.9415,
+    "lng": -77.0870,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 7:30 AM - 7:00 PM\nWeekends: 9:00 AM - 5:00 PM",
+    "description": "Campus coffee and tea bar with specialty drinks and light snacks on the Vern.",
+    "rating": 4.3,
+    "reviews": 41,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Loyalty Perk",
+      "amount": "10% OFF",
+      "category": "Coffee & Snacks",
+      "details": "10% off every 5th drink when paying with Dining Dollars.",
+      "validTimes": "All day",
+      "requiresStudentId": true,
+      "tags": ["Coffee", "Dining Dollars", "All Day"]
+    }
+  },
+  {
+    "id": "shenkman-hall",
+    "name": "Shenkman Hall Dining",
+    "campus": "Foggy Bottom",
+    "type": "All-You-Care-to-Eat",
+    "address": "616 23rd Street NW, Washington, D.C. 20052",
+    "lat": 38.9007,
+    "lng": -77.0486,
+    "payment": ["Dining Dollars", "Campus Cash", "GWorld"],
+    "hours": "Weekdays: 7:00 AM - 10:00 PM\nWeekends: 9:00 AM - 9:00 PM",
+    "description": "All-you-care-to-eat dining with multiple concepts including sushi, bowls, and grill stations.",
+    "rating": 4.5,
+    "reviews": 127,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Student Discount",
+      "amount": "15% OFF",
+      "category": "All-You-Care-to-Eat",
+      "details": "15% off all dining plans for GW students with valid ID.",
+      "validTimes": "All day",
+      "requiresStudentId": true,
+      "tags": ["Dining Plan", "Student ID Required", "All Day"]
+    }
+  },
+  {
+    "id": "thurston-hall",
+    "name": "Thurston Hall Dining",
+    "campus": "Foggy Bottom",
+    "type": "All-You-Care-to-Eat",
+    "address": "1900 F Street NW, Washington, D.C. 20052",
+    "lat": 38.8988,
+    "lng": -77.0438,
+    "payment": ["Dining Dollars", "Campus Cash", "GWorld"],
+    "hours": "Weekdays: 7:00 AM - 9:00 PM\nWeekends: 9:00 AM - 9:00 PM",
+    "description": "Dining hall with multiple stations including deli, grill, salads, and desserts.",
+    "rating": 4.3,
+    "reviews": 89,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Happy Hour",
+      "amount": "20% OFF",
+      "category": "All-You-Care-to-Eat",
+      "details": "20% off during off-peak hours (2:00 PM – 5:00 PM).",
+      "validTimes": "2:00 PM – 5:00 PM",
+      "requiresStudentId": true,
+      "tags": ["Happy Hour", "Off-Peak", "Limited Time"]
+    }
+  },
+  {
+    "id": "pelham-commons",
+    "name": "The Eatery at Pelham Commons",
+    "campus": "Mount Vernon",
+    "type": "All-You-Care-to-Eat",
+    "address": "2100 Foxhall Road NW, Washington, D.C. 20007",
+    "lat": 38.9422,
+    "lng": -77.0860,
+    "payment": ["Dining Dollars", "Campus Cash", "GWorld"],
+    "hours": "Weekdays: 7:00 AM - 9:00 PM\nWeekends: 9:00 AM - 8:00 PM",
+    "description": "Dining hall on the Mount Vernon campus with multiple concepts and Grill 202.",
+    "rating": 4.1,
+    "reviews": 56,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Student Discount",
+      "amount": "10% OFF",
+      "category": "All-You-Care-to-Eat",
+      "details": "10% off all-you-care-to-eat dinner for Vern residents.",
+      "validTimes": "After 5:00 PM",
+      "requiresStudentId": true,
+      "tags": ["Dining Plan", "Evening Deal", "All Day"]
+    }
+  },
+  {
+    "id": "halal-shack",
+    "name": "Halal Shack",
+    "campus": "Foggy Bottom",
+    "type": "Halal Restaurant",
+    "address": "2121 H Street NW, B1 Level, Washington, D.C. 20052",
+    "lat": 38.8998,
+    "lng": -77.0479,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 11:00 AM - 9:00 PM\nWeekends: 12:00 PM - 8:00 PM",
+    "description": "Halal dining station offering shawarma, kebabs, and rice bowls with customizable toppings.",
+    "rating": 4.6,
+    "reviews": 73,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Student Discount",
+      "amount": "12% OFF",
+      "category": "Fast Food",
+      "details": "12% off halal bowls and wraps for students with valid ID.",
+      "validTimes": "All day",
+      "requiresStudentId": true,
+      "tags": ["Halal", "Student Discount", "All Day"]
+    }
+  },
+  {
+    "id": "usc-dining",
+    "name": "University Student Center Dining",
+    "campus": "Foggy Bottom",
+    "type": "Food Court",
+    "address": "800 21st Street NW, 1st Floor, Washington, D.C. 20052",
+    "lat": 38.8997,
+    "lng": -77.0480,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 7:00 AM - 11:00 PM\nWeekends: 10:00 AM - 11:00 PM",
+    "description": "Central campus food court with multiple vendors and flexible dining options.",
+    "rating": 3.9,
+    "reviews": 112,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Multi-Vendor Deal",
+      "amount": "8% OFF",
+      "category": "Food Court",
+      "details": "8% off when you mix and match items from two different vendors on one receipt.",
+      "validTimes": "All day",
+      "requiresStudentId": false,
+      "tags": ["Food Court", "Multiple Options", "All Day"]
+    }
+  },
+  {
+    "id": "ross-hall",
+    "name": "Ross Hall Café",
+    "campus": "Foggy Bottom",
+    "type": "Café",
+    "address": "2300 I Street NW, 1st Floor, Washington, D.C. 20052",
+    "lat": 38.9009,
+    "lng": -77.0506,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 7:30 AM - 3:00 PM\nWeekends: Closed",
+    "description": "Coffee, light meals, and grab-and-go options for SMHS students, faculty, and staff.",
+    "rating": 4.2,
+    "reviews": 34,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Coffee Break",
+      "amount": "10% OFF",
+      "category": "Coffee & Snacks",
+      "details": "10% off any beverage for SMHS students between classes.",
+      "validTimes": "9:00 AM – 2:00 PM",
+      "requiresStudentId": true,
+      "tags": ["Coffee", "Student Discount", "All Day"]
+    }
+  },
+  {
+    "id": "gw-hillel",
+    "name": "GW Hillel Dining",
+    "campus": "Hillel",
+    "type": "Kosher Dining",
+    "address": "2300 H Street NW, Lower Level, Washington, D.C. 20037",
+    "lat": 38.9001,
+    "lng": -77.0439,
+    "payment": ["Dining Dollars", "Campus Cash", "Credit Cards"],
+    "hours": "Weekdays: 11:00 AM - 2:00 PM, 5:00 PM - 8:00 PM\nWeekends: 12:00 PM - 3:00 PM",
+    "description": "Kosher dining facility with traditional Jewish cuisine and options for dietary restrictions.",
+    "rating": 4.7,
+    "reviews": 41,
+    "delivery": {
+      "uberEats": "#",
+      "grubhub": "#",
+      "doordash": "#",
+      "lyft": "#"
+    },
+    "discount": {
+      "badge": "Student Discount",
+      "amount": "15% OFF",
+      "category": "Kosher Dining",
+      "details": "15% off kosher entrées for students with valid ID.",
+      "validTimes": "All day",
+      "requiresStudentId": true,
+      "tags": ["Kosher", "Student Discount", "All Day"]
+    }
+  }
+]
