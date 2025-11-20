@@ -758,7 +758,7 @@ function renderLocationCards(items) {
         `;
       } else {
         lastReviewHtml =
-          '<p class="small text-muted mb-0">No reviews yet. Be the first to review.</p>';
+          '<p class="small text-muted mb-0">Leave a review. We want to improve our services.</p>';
       }
 
       const mapsUrl =

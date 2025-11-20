@@ -162,7 +162,7 @@
     "description": "Multi-concept food hall featuring several local and national brands with flexible seating.",
     "rating": 4.2,
     "reviews": 89,
-    "image": "District_house.png",
+    "image": "District-house.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",
@@ -432,7 +432,7 @@
     "description": "Coffee, light meals, and grab-and-go options for SMHS students, faculty, and staff.",
     "rating": 4.2,
     "reviews": 34,
-    "image": "rosss-hall.jpg",
+    "image": "ross-hall.jpg",
     "delivery": {
       "uberEats": "#",
       "grubhub": "#",

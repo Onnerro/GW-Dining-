@@ -644,8 +644,8 @@ body {
 .location-card {
   background: #ffffff;
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+  border: 2px solid #ebe7e5;
+  box-shadow: 1 2px 4px rgba(15, 23, 42, 0.06);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -717,18 +717,448 @@ body {
   max-height: 150px;
   overflow-y: auto;
 }
-
-.discount-img-wrapper {
-  width: 100%;
-  height: 140px;          /* smaller height */
+.discount-card-img-wrapper {
+  height: 180px;  
+  border: 2px solid #ebe7e5;            /* smaller header area */
   overflow: hidden;
-  border-top-left-radius: .5rem;
-  border-top-right-radius: .5rem;
-  background: #f2f2f2;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background-color: #f5f5f5;
 }
-
 .discount-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+/* Blinking animation */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+
+/* Badge on top of the image */
+.discount-badge-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  padding: 6px 10px;
+  background: #ffc107;
+  color: #000;
+  font-weight: 600;
+  border-radius: 6px;
+  animation: blink 1.5s infinite;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* Required to make the image wrapper relative */
+.discount-card-img-wrapper {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+/* 🔥 Soft blinking title animation */
+.blink-title {
+  animation: blinkFade 1.8s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes blinkFade {
+  0% {
+      opacity: 1;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+      opacity: 0.55;
+      text-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
+  }
+  100% {
+      opacity: 1;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+  }
+}
+/* Infinite typewriter-style fade-in for each line */
+.perks-typing li {
+  opacity: 0;
+  animation: typeLine 0.8s ease forwards;
+}
+
+.perks-typing li:nth-child(1) { animation-delay: 0.2s; }
+.perks-typing li:nth-child(2) { animation-delay: 1.0s; }
+.perks-typing li:nth-child(3) { animation-delay: 1.8s; }
+.perks-typing li:nth-child(4) { animation-delay: 2.6s; }
+.perks-typing li:nth-child(5) { animation-delay: 3.4s; }
+
+/* Entire block loops every 5.2 seconds */
+.perks-typing.infinite {
+  animation: restartList 5.2s linear infinite;
+}
+
+@keyframes typeLine {
+  0% { opacity: 0; transform: translateX(-10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* This hides the block for a moment so animation restarts clean */
+@keyframes restartList {
+  0% { opacity: 1; }
+  96% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+    /* Hero slider */
+    .meal-hero-carousel .carousel-item {
+      max-height: 520px;
+      overflow: hidden;
+    }
+
+    .meal-hero-carousel .carousel-item img {
+      object-fit: cover;
+      width: 100%;
+      height: 520px;
+    }
+
+    .meal-hero-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.55)
+      );
+      position: absolute;
+      inset: 0;
+    }
+
+    .meal-hero-caption {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding: 0 1rem;
+    }
+
+    .meal-hero-caption h1 {
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .meal-hero-caption p {
+      font-size: 1rem;
+      max-width: 720px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* =========================
+   MEAL PLANS – PRICING CARDS
+   ========================= */
+
+.meal-plans-section {
+  padding: 4.5rem 0 5rem;
+  background: #f6f7f8;       /* light grey background like reference */
+}
+
+.meal-plans-heading {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.meal-plans-subtitle {
+  max-width: 720px;
+  margin: 0 auto 2.75rem;
+  font-size: 0.98rem;
+  color: #6b7280;            /* muted grey */
+}
+
+/* Card shell */
+
+.meal-plan-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  padding: 2.25rem 2rem 2rem;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-plan-card.is-popular {
+  border-width: 2px;
+  border-color: #1d4ed8;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.18);
+}
+
+.plan-popular-pill {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 999px;
+  padding: 0.25rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Headings & price */
+
+.plan-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.plan-price-wrap {
+  margin-bottom: 0.15rem;
+}
+
+.plan-price {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.plan-price-note {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Meta row (swipes / dollars) */
+
+.plan-meta-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+}
+
+.plan-meta-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Features */
+
+.plan-section-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+}
+
+.plan-features {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.4rem 0 1.25rem;
+  font-size: 0.92rem;
+  color: #374151;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+.plan-features li::before {
+  content: "✓";
+  color: #16a34a;
+  font-size: 0.82rem;
+  margin-top: 0.15rem;
+}
+
+/* Best for */
+
+.plan-bestfor {
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+/* Button area – make button smaller, centered */
+
+.plan-select-wrapper {
+  margin-top: 1.75rem;
+  display: flex;
+  justify-content: center;
+}
+
+.plan-select-btn {
+  border-radius: 999px;
+  padding: 0.55rem 1.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-width: 0;
+  width: auto;               /* not full width */
+}
+
+/* Make outline buttons match reference tone */
+.plan-select-btn.btn-outline-primary {
+  border-width: 1px;
+}
+
+/* Responsive tweaks */
+
+@media (max-width: 991.98px) {
+  .meal-plan-card {
+    padding: 2rem 1.6rem 1.8rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .meal-plans-section {
+    padding: 3.5rem 0 4rem;
+  }
+
+  .meal-plans-heading {
+    font-size: 1.8rem;
+  }
+
+  .meal-plans-subtitle {
+    margin-bottom: 2rem;
+  }
+
+  .plan-popular-pill {
+    top: -12px;
+  }
+}
+
+/* Divider Line Under Section Titles */
+.divider {
+  width: 60px;
+  height: 2px;
+  background-color: #222;
+}
+
+/* Icon circle */
+.how-icon {
+  width: 80px;
+  height: 80px;
+  background: #f5f5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.how-icon i {
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+/* Fade-in animation */
+@keyframes howFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card base */
+.how-it-works .how-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px 18px 28px;
+  height: 100%;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: howFadeUp 0.8s ease-out forwards;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+/* Staggered delays for each column */
+.how-it-works .col-md-4:nth-child(1) .how-card {
+  animation-delay: 0.05s;
+}
+
+.how-it-works .col-md-4:nth-child(2) .how-card {
+  animation-delay: 0.18s;
+}
+
+.how-it-works .col-md-4:nth-child(3) .how-card {
+  animation-delay: 0.30s;
+}
+
+/* Hover effects */
+.how-it-works .how-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+  background-color: #fdfdfd;
+}
+
+.how-it-works .how-card:hover .how-icon {
+  background: #e0d8d8;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.how-it-works .how-card:hover .how-icon i {
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* FAQ Section */
+#faq-section h2 {
+  font-size: 2rem;
+}
+
+.faq-divider {
+  width: 60px;
+  height: 2px;
+  background: #000;
+  opacity: 0.2;
+}
+
+.faq-card {
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.ready-choose-section {
+  background: #111; /* deep dark background */
+}
+
+.ready-choose-section .section-divider {
+  width: 60px;
+  height: 2px;
+  background: #ffffff;
+  opacity: 0.4;
+}
+
+/* Hover effects */
+.ready-choose-section .btn-light:hover {
+  background: #e6e6e6;
+}
+
+.ready-choose-section .btn-outline-light:hover {
+  background: #ffffff;
+  color: #000;
 }

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GW Dining | Meal Plans</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Shared navbar -->
+  <div id="navbar-container"></div>
+
+  <main>
+
+    <!-- HERO SLIDER -->
+    <section class="position-relative">
+      <div id="mealPlansCarousel" class="carousel slide meal-hero-carousel" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#mealPlansCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#mealPlansCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+
+        <div class="carousel-inner">
+          <!-- Slide 1 -->
+          <div class="carousel-item active">
+            <img src="images/slider1.png" class="d-block w-100" alt="Healthy meals delivered">
+            <div class="meal-hero-overlay"></div>
+            <div class="meal-hero-caption">
+              <h1>Meal Plans</h1>
+              <hr class="plans-section-hr" />
+              <p>
+                Choose the perfect plan for your lifestyle and dining preferences —
+                whether you live on campus, commute from off campus, or just need
+                flexible options across GW Dining.
+              </p>
+              <span class="plan-pill mt-3">
+                Use your plan at Shenkman, Thurston, Pelham Commons, and more
+              </span>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item">
+            <img src="images/slider2.png" class="d-block w-100" alt="Chef preparing a plated meal">
+            <div class="meal-hero-overlay"></div>
+            <div class="meal-hero-caption">
+              <h1>Curated for Campus Life</h1>
+              <hr class="plans-section-hr" />
+              <p>
+                Every plan is designed to balance flexibility, value, and nutrition —
+                from unlimited dining hall access to Dining Dollars you can use at
+                your favorite retail locations.
+              </p>
+              <span class="plan-pill mt-3">
+                Swap, reload, and adjust each semester
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#mealPlansCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mealPlansCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+<!-- OUR PLANS -->
+<section class="meal-plans-section">
+    <div class="container">
+      <h2 class="meal-plans-heading text-center">Our Plans</h2>
+      <p class="meal-plans-subtitle text-center">
+        Pick the plan that best matches how often you eat on campus. All plans are valid for one semester
+        and can be adjusted before the add/drop deadline.
+      </p>
+  
+      <div class="row g-4 justify-content-center">
+  
+        <!-- Colonial Plus (Most popular) -->
+        <div class="col-md-6 col-lg-3">
+          <article class="meal-plan-card is-popular h-100">
+            <div class="plan-popular-pill">
+              <i class="bi bi-star-fill me-1"></i> Most Popular
+            </div>
+  
+            <h3 class="plan-name">Colonial Plus</h3>
+  
+            <div class="plan-price-wrap">
+              <div class="plan-price">$3,850</div>
+              <div class="plan-price-note">per semester</div>
+            </div>
+  
+            <div class="plan-meta d-flex justify-content-between mt-3 mb-3">
+              <div>
+                <div class="plan-meta-label">Meal Swipes</div>
+                <div class="plan-meta-value">Unlimited</div>
+              </div>
+              <div class="text-end">
+                <div class="plan-meta-label">Dining Dollars</div>
+                <div class="plan-meta-value">$400</div>
+              </div>
+            </div>
+  
+            <h6 class="plan-section-title">Features:</h6>
+            <ul class="plan-features">
+              <li>Unlimited access to all dining halls</li>
+              <li>$400 Dining Dollars per semester</li>
+              <li>Guest meal privileges</li>
+              <li>Late night dining access</li>
+              <li>Priority seating during peak hours</li>
+            </ul>
+  
+            <div class="plan-bestfor">
+              <div class="plan-section-title mb-1">Best for:</div>
+              <p class="mb-0">
+                Students living on campus who eat most meals at dining halls.
+              </p>
+            </div>
+  
+            <div class="plan-select-wrapper">
+              <!-- ADD-TO-CART HOOK -->
+              <button
+                class="btn btn-primary plan-select-btn add-to-cart-btn"
+                data-name="Colonial Plus Plan"
+                data-price="3850"
+              >
+                Select Plan
+              </button>
+            </div>
+          </article>
+        </div>
+  
+        <!-- Colonial -->
+        <div class="col-md-6 col-lg-3">
+          <article class="meal-plan-card h-100">
+            <h3 class="plan-name">Colonial</h3>
+  
+            <div class="plan-price-wrap">
+              <div class="plan-price">$3,450</div>
+              <div class="plan-price-note">per semester</div>
+            </div>
+  
+            <div class="plan-meta d-flex justify-content-between mt-3 mb-3">
+              <div>
+                <div class="plan-meta-label">Meal Swipes</div>
+                <div class="plan-meta-value">19 per week</div>
+              </div>
+              <div class="text-end">
+                <div class="plan-meta-label">Dining Dollars</div>
+                <div class="plan-meta-value">$300</div>
+              </div>
+            </div>
+  
+            <h6 class="plan-section-title">Features:</h6>
+            <ul class="plan-features">
+              <li>19 meals per week at dining halls</li>
+              <li>$300 Dining Dollars per semester</li>
+              <li>Rollover up to 5 unused meals per week</li>
+              <li>Access to all dining locations</li>
+              <li>Guest meal privileges (limited)</li>
+            </ul>
+  
+            <div class="plan-bestfor">
+              <div class="plan-section-title mb-1">Best for:</div>
+              <p class="mb-0">
+                Students who eat regularly but want some flexibility.
+              </p>
+            </div>
+  
+            <div class="plan-select-wrapper">
+              <button
+                class="btn btn-outline-primary plan-select-btn add-to-cart-btn"
+                data-name="Colonial Plan"
+                data-price="3450"
+              >
+                Select Plan
+              </button>
+            </div>
+          </article>
+        </div>
+  
+        <!-- Colonial Flex -->
+        <div class="col-md-6 col-lg-3">
+          <article class="meal-plan-card h-100">
+            <h3 class="plan-name">Colonial Flex</h3>
+  
+            <div class="plan-price-wrap">
+              <div class="plan-price">$2,950</div>
+              <div class="plan-price-note">per semester</div>
+            </div>
+  
+            <div class="plan-meta d-flex justify-content-between mt-3 mb-3">
+              <div>
+                <div class="plan-meta-label">Meal Swipes</div>
+                <div class="plan-meta-value">14 per week</div>
+              </div>
+              <div class="text-end">
+                <div class="plan-meta-label">Dining Dollars</div>
+                <div class="plan-meta-value">$500</div>
+              </div>
+            </div>
+  
+            <h6 class="plan-section-title">Features:</h6>
+            <ul class="plan-features">
+              <li>14 meals per week at dining halls</li>
+              <li>$500 Dining Dollars per semester</li>
+              <li>Maximum flexibility with dining dollars</li>
+              <li>Access to all campus dining</li>
+              <li>Perfect for grab-and-go lifestyle</li>
+            </ul>
+  
+            <div class="plan-bestfor">
+              <div class="plan-section-title mb-1">Best for:</div>
+              <p class="mb-0">
+                Students with irregular schedules or who prefer retail dining.
+              </p>
+            </div>
+  
+            <div class="plan-select-wrapper">
+              <button
+                class="btn btn-outline-primary plan-select-btn add-to-cart-btn"
+                data-name="Colonial Flex Plan"
+                data-price="2950"
+              >
+                Select Plan
+              </button>
+            </div>
+          </article>
+        </div>
+  
+        <!-- Off-Campus -->
+        <div class="col-md-6 col-lg-3">
+          <article class="meal-plan-card h-100">
+            <h3 class="plan-name">Off-Campus</h3>
+  
+            <div class="plan-price-wrap">
+              <div class="plan-price">$1,200</div>
+              <div class="plan-price-note">per semester</div>
+            </div>
+  
+            <div class="plan-meta d-flex justify-content-between mt-3 mb-3">
+              <div>
+                <div class="plan-meta-label">Meal Swipes</div>
+                <div class="plan-meta-value">None</div>
+              </div>
+              <div class="text-end">
+                <div class="plan-meta-label">Dining Dollars</div>
+                <div class="plan-meta-value">$1,200</div>
+              </div>
+            </div>
+  
+            <h6 class="plan-section-title">Features:</h6>
+            <ul class="plan-features">
+              <li>$1,200 Dining Dollars per semester</li>
+              <li>No required meal swipes</li>
+              <li>Access to all retail locations</li>
+              <li>Discounted pricing at dining halls</li>
+              <li>Flexible spending throughout semester</li>
+            </ul>
+  
+            <div class="plan-bestfor">
+              <div class="plan-section-title mb-1">Best for:</div>
+              <p class="mb-0">
+                Off-campus students and upperclassmen who still want campus dining access.
+              </p>
+            </div>
+  
+            <div class="plan-select-wrapper">
+              <button
+                class="btn btn-outline-primary plan-select-btn add-to-cart-btn"
+                data-name="Off-Campus Plan"
+                data-price="1200"
+              >
+                Select Plan
+              </button>
+            </div>
+          </article>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS SECTION -->
+<section class="py-5 bg-light how-it-works">
+    <div class="container text-center">
+  
+      <h2 class="fw-bold mb-4">How It Works</h2>
+      <div class="divider mx-auto mb-5"></div>
+  
+      <div class="row g-5 justify-content-center">
+  
+        <!-- Meal Swipes -->
+        <div class="col-md-4">
+          <div class="how-card">
+            <div class="how-icon mb-3">
+              <i class="bi bi-person-fill fs-1 text-dark"></i>
+            </div>
+            <h5 class="fw-semibold mb-3">Meal Swipes</h5>
+            <p class="text-muted small px-3">
+              Use meal swipes for all-you-care-to-eat dining at our main halls. 
+              Each swipe gives you unlimited access during that meal period.
+            </p>
+          </div>
+        </div>
+  
+        <!-- Dining Dollars -->
+        <div class="col-md-4">
+          <div class="how-card">
+            <div class="how-icon mb-3">
+              <i class="bi bi-currency-dollar fs-1 text-dark"></i>
+            </div>
+            <h5 class="fw-semibold mb-3">Dining Dollars</h5>
+            <p class="text-muted small px-3">
+              Dining Dollars work like cash at all campus dining locations. 
+              Perfect for grab-and-go meals, snacks, and retail dining options.
+            </p>
+          </div>
+        </div>
+  
+        <!-- Flexibility -->
+        <div class="col-md-4">
+          <div class="how-card">
+            <div class="how-icon mb-3">
+              <i class="bi bi-clock-history fs-1 text-dark"></i>
+            </div>
+            <h5 class="fw-semibold mb-3">Flexibility</h5>
+            <p class="text-muted small px-3">
+              Mix and match meal swipes and Dining Dollars based on your schedule. 
+              Perfect for busy students with varying dining needs.
+            </p>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  <!-- FAQ SECTION -->
+<section class="py-5 bg-light" id="faq-section">
+    <div class="container">
+      <h2 class="text-center mb-4 fw-bold">Frequently Asked Questions</h2>
+      <div class="faq-divider mx-auto mb-5"></div>
+  
+      <!-- FAQ item 1 -->
+      <div class="faq-card p-4 rounded-3 shadow-sm mb-4">
+        <h5 class="fw-semibold">When do I need to select my meal plan?</h5>
+        <p class="mt-2 mb-0">
+          Meal plan selection is required during housing registration for on-campus students.
+          Changes can be made during the first two weeks of each semester.
+        </p>
+      </div>
+  
+      <!-- FAQ item 2 -->
+      <div class="faq-card p-4 rounded-3 shadow-sm mb-4">
+        <h5 class="fw-semibold">Can I change my meal plan during the semester?</h5>
+        <p class="mt-2 mb-0">
+          Yes, meal plan changes are allowed during the first two weeks of each semester.
+          After this period, only upgrades are permitted.
+        </p>
+      </div>
+  
+      <!-- FAQ item 3 -->
+      <div class="faq-card p-4 rounded-3 shadow-sm mb-4">
+        <h5 class="fw-semibold">What are Dining Dollars?</h5>
+        <p class="mt-2 mb-0">
+          Dining Dollars are part of your meal plan that can be used at any campus dining
+          location. They work like cash and don't expire until the end of the academic year.
+        </p>
+
+      </div>
+  <!-- FAQ Item: Do unused meal swipes roll over? -->
+<div class="faq-item card shadow-sm p-4 mb-4">
+    <h5 class="fw-semibold">Do unused meal swipes roll over?</h5>
+    <p class="mb-0">
+      Some plans allow limited rollover of unused meals within the same week.
+      Meals do not carry over between weeks or semesters.
+    </p>
+  </div>
+  
+  <!-- FAQ Item: Can I use my meal plan for guests? -->
+  <div class="faq-item card shadow-sm p-4 mb-4">
+    <h5 class="fw-semibold">Can I use my meal plan for guests?</h5>
+    <p class="mb-0">
+      Most meal plans include guest privileges, allowing you to treat friends and
+      family. Guest meal costs are deducted from your Dining Dollars.
+    </p>
+  </div>
+    </div>
+  </section>
+
+  <!-- READY TO CHOOSE SECTION -->
+<section class="ready-choose-section py-5 bg-dark text-white text-center">
+    <div class="container">
+  
+      <h2 class="fw-bold mb-3">Ready to Choose?</h2>
+      <div class="section-divider mx-auto mb-4"></div>
+  
+      <p class="mb-4 fs-5">
+        Contact our dining services team for personalized recommendations
+      </p>
+  
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="#contact" class="btn btn-light px-4 py-2">
+          Contact Dining Services
+        </a>
+  
+        <a href="dining-locations.html" class="btn btn-outline-light px-4 py-2">
+          View Locations
+        </a>
+      </div>
+  
+    </div>
+  </section>
+  </main>
+
+  <!-- Shared footer -->
+  <div id="footer-container"></div>
+
+  <!-- Main JS (cart, menus, etc.) -->
+  <script src="main.js"></script>
+
+  <!-- Navbar loader -->
+  <script>
+    const CURRENT_PAGE = "meal-plans"; // match data-page on nav link
+
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar-container").innerHTML = html;
+
+        const activeLink = document.querySelector(
+          '.gw-nav-link[data-page="' + CURRENT_PAGE + '"]'
+        );
+        if (activeLink) activeLink.classList.add("active");
+
+        if (window.setupCartOffcanvasEvents) {
+          window.setupCartOffcanvasEvents();
+        }
+        if (window.updateCartCountDisplay) {
+          window.updateCartCountDisplay();
+        }
+        if (window.renderCartPanel) {
+          window.renderCartPanel();
+        }
+      })
+      .catch(err => console.error("Navbar load error:", err));
+  </script>
+
+  <!-- Footer loader -->
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("footer-container").innerHTML = html;
+      })
+      .catch(err => console.error("Footer load error:", err));
+  </script>
+
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
