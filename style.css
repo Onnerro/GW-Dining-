@@ -1570,11 +1570,17 @@ body {
   vertical-align: middle;
 }
 
-/* Make email links match the design */
-.contact-info-card a {
-  color: #0d6efd;
+.gw-video-card {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 16px;
 }
 
-.contact-info-card a:hover {
-  text-decoration: underline;
+.gw-video-section h2 {
+  font-size: 1.8rem;
+}
+
+.gw-video-section p {
+  max-width: 600px;
+  margin: 0 auto 20px auto;
 }
