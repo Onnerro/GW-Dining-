@@ -1016,3 +1016,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Dining Locations map is initialized separately by Google Maps callback
 });
+
+// ================== STUDENT SERVICES FAQ TOGGLE ==================
+document.addEventListener("DOMContentLoaded", () => {
+  const faqList = document.querySelector(".student-faq-list");
+  if (!faqList) return; // not on this page
+
+  faqList.addEventListener("click", (e) => {
+    const header = e.target.closest(".student-faq-header");
+    if (!header) return;
+
+    const item = header.closest(".student-faq-item");
+    if (!item) return;
+
+    const isOpen = item.classList.contains("is-open");
+
+    // Close any currently open item
+    faqList.querySelectorAll(".student-faq-item.is-open").forEach((openItem) => {
+      openItem.classList.remove("is-open");
+    });
+
+    // Re-open the clicked one if it was closed
+    if (!isOpen) {
+      item.classList.add("is-open");
+    }
+  });
+    // Dietary accommodation slide-out form
+    const openBtn = document.getElementById("openDietaryFormBtn");
+    const panel = document.getElementById("dietaryFormPanel");
+    const closeBtn = document.getElementById("dietaryFormClose");
+    const form = document.getElementById("dietaryForm");
+  
+    if (openBtn && panel) {
+      openBtn.addEventListener("click", () => {
+        panel.classList.add("is-visible");
+      });
+    }
+  
+    if (closeBtn && panel) {
+      closeBtn.addEventListener("click", () => {
+        panel.classList.remove("is-visible");
+      });
+    }
+  
+    if (form && panel) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+  
+        // Simple notification
+        alert("Your dietary accommodation request has been sent.");
+  
+        form.reset();
+        panel.classList.remove("is-visible");
+      });
+    }
+});

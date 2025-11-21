@@ -1162,3 +1162,419 @@ body {
   background: #ffffff;
   color: #000;
 }
+-content: space-between;
+  text-align: left;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.student-faq-icon {
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.student-faq-body {
+  padding: 0 22px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.student-faq-body p {
+  margin-bottom: 18px;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+/* open state */
+.student-faq-item.is-open .student-faq-body {
+  max-height: 500px; /* enough for the longest answer */
+}
+
+.student-faq-item.is-open .student-faq-icon i {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+}
+
+/* Dietary card basics (if not already added) */
+.dietary-card {
+  border: 1px solid #e5e7eb;
+  position: relative;
+  overflow: visible;
+}
+
+.dietary-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #0d6efd;
+  font-size: 1rem;
+}
+
+.dietary-tag-pill {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid #d0d5dd;
+  background: #f9fafb;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.dietary-steps {
+  padding-left: 1.2rem;
+}
+.dietary-steps li {
+  margin-bottom: 0.35rem;
+}
+
+/.dietary-card {
+  position: relative;
+}
+
+.dietary-form-panel {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 320px;
+  max-width: calc(100% - 3rem);
+  background: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  padding: 1rem 1.1rem 1.1rem;
+  font-size: 0.85rem;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    max-height 0.25s ease;
+}
+
+/* was .open before – now matches JS */
+.dietary-form-panel.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  max-height: 600px;
+}
+
+.dietary-form-header h3 {
+  font-weight: 600;
+}
+
+.dietary-form-header .btn-close-sm,
+.dietary-form-header .btn-close {
+  width: 0.9rem;
+  height: 0.9rem;
+  padding: 0;
+}
+
+.form-label-sm {
+  font-size: 0.75rem;
+  margin-bottom: 0.15rem;
+}
+
+@media (max-width: 991.98px) {
+  .dietary-form-panel {
+    position: static;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Blink / pulse animation for the "Most Popular" pill */
+.plan-popular-pill {
+  animation: pillBlink 1.6s ease-in-out infinite;
+}
+
+/* Star icon pulse */
+.plan-popular-pill i {
+  animation: starPulse 1.6s ease-in-out infinite;
+}
+
+/* Keyframes */
+@keyframes pillBlink {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.25); /* soft glow */
+    opacity: 0.9;
+  }
+}
+
+@keyframes starPulse {
+  0%, 100% {
+    transform: scale(1);
+    color: #ffc107;              /* bootstrap warning color */
+  }
+  50% {
+    transform: scale(1.2);
+    color: #ffe58f;
+  }
+}
+/* ===== Student Services ===== */
+
+.student-services-hero h1 {
+  letter-spacing: 0.02em;
+}
+
+.hero-divider {
+  width: 60px;
+  height: 2px;
+  background: #b58a3a;
+}
+
+/* Service cards base */
+.service-card {
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 1rem;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: ss-fade-in-up 0.6s ease forwards;
+}
+
+/* Hover effect */
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Icon wrapper */
+.service-icon i {
+  background: #e9f1ff;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* Animation keyframes */
+@keyframes ss-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animation timing */
+.services-row-1 .col-md-6:nth-child(1) .service-card {
+  animation-delay: 0.05s;
+}
+
+.services-row-1 .col-md-6:nth-child(2) .service-card {
+  animation-delay: 0.15s;
+}
+
+.services-row-2 .col-md-6:nth-child(1) .service-card {
+  animation-delay: 0.25s;
+}
+
+.services-row-2 .col-md-6:nth-child(2) .service-card {
+  animation-delay: 0.35s;
+}
+/* Shared card look on this page */
+.service-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+}
+
+/* FAQ styling */
+.student-faq-section {
+  background: #f8fafc;
+}
+
+.student-faq-title {
+  font-weight: 700;
+}
+
+.student-faq-list {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.student-faq-item {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.student-faq-header {
+  width: 100%;
+  padding: 0.9rem 1.3rem;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-faq-question {
+  font-weight: 500;
+  text-align: left;
+}
+
+.student-faq-icon i {
+  transition: transform 0.2s ease;
+}
+
+.student-faq-item .student-faq-body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 1.3rem;
+  transition: max-height 0.25s ease, padding 0.25s ease;
+}
+
+.student-faq-item.is-open .student-faq-body {
+  max-height: 400px;
+  padding-bottom: 1rem;
+}
+
+.student-faq-item.is-open .student-faq-icon i {
+  transform: rotate(180deg);
+}
+
+/* Dietary accommodations detail card */
+.dietary-accommodations-section {
+  background: #f9fafb;
+}
+
+.dietary-card {
+  position: relative;          /* for the slide-out panel */
+}
+
+.dietary-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #eff6ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  font-size: 1rem;
+}
+
+.dietary-tag-pill {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  background: #f9fafb;
+}
+
+/* Slide-out form panel */
+.dietary-form-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 340px;
+  max-width: 100%;
+  background: #ffffff;
+  border-radius: 0 0.75rem 0.75rem 0;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+  padding: 1rem 1.25rem 1.25rem;
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  z-index: 20;
+}
+
+.dietary-form-panel.is-visible {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dietary-form-header {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Mobile behaviour: become a bottom sheet */
+@media (max-width: 767.98px) {
+  .dietary-form-panel {
+    position: fixed;
+    inset: auto 0 0 0;
+    border-radius: 1rem 1rem 0 0;
+    max-width: none;
+  }
+}
+
+/* Emergency bar */
+.emergency-dining-section {
+  background: #fff5f4;
+  border-top: 1px solid #fee2e2;
+}
+
+.emergency-dining-section .btn-danger,
+.emergency-dining-section .btn-outline-secondary {
+  border-radius: 999px;
+}
+/* Contact Information section */
+.contact-info-section {
+  background: #f5f5f7;          /* light grey like the screenshot */
+}
+
+.contact-info-container {
+  max-width: 1100px;            /* aligns with FAQ / dietary width vibe */
+  margin: 0 auto;
+}
+
+/* Individual contact cards */
+.contact-info-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.06);
+  padding: 1.75rem 1.9rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.contact-info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 40px rgba(15, 23, 42, 0.10);
+}
+
+/* Icons inside the contact list */
+.contact-info-card i {
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+/* Make email links match the design */
+.contact-info-card a {
+  color: #0d6efd;
+}
+
+.contact-info-card a:hover {
+  text-decoration: underline;
+}
