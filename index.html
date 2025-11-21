@@ -37,8 +37,13 @@
         Exceptional culinary experiences across The George Washington University campus.
       </p>
       <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-        <a href="#" class="btn btn-light btn-lg px-4 hero-btn-primary">Explore Locations</a>
-        <a href="#" class="btn btn-outline-light btn-lg px-4">View Menus</a>
+        <!-- 🔗 hero buttons now link to pages -->
+        <a href="locations.html" class="btn btn-light btn-lg px-4 hero-btn-primary">
+          Explore Locations
+        </a>
+        <a href="menus.html" class="btn btn-outline-light btn-lg px-4">
+          View Menus
+        </a>
       </div>
       <div class="hero-scroll text-uppercase small">
         <div class="scroll-line mb-2"></div>
@@ -162,7 +167,10 @@
             <div class="qa-icon mb-3"><i class="bi bi-egg-fried"></i></div>
             <h5 class="fw-bold">Today's Menus</h5>
             <p class="text-muted small">View daily menus for all dining locations</p>
-            <button class="btn btn-outline-secondary w-100 mt-auto">View Menus</button>
+            <!-- 🔗 link to menus -->
+            <a href="menus.html" class="btn btn-outline-secondary w-100 mt-auto">
+              View Menus
+            </a>
           </div>
         </div>
 
@@ -170,9 +178,12 @@
         <div class="col-md-3">
           <div class="qa-card p-4 rounded shadow-sm h-100">
             <div class="qa-icon mb-3"><i class="bi bi-calendar-event"></i></div>
-            <h5 class="fw-bold">Hours & Locations</h5>
+            <h5 class="fw-bold">Hours &amp; Locations</h5>
             <p class="text-muted small">Find operating hours and campus locations</p>
-            <button class="btn btn-outline-secondary w-100 mt-auto">Find Locations</button>
+            <!-- 🔗 link to locations -->
+            <a href="locations.html" class="btn btn-outline-secondary w-100 mt-auto">
+              Find Locations
+            </a>
           </div>
         </div>
 
@@ -182,7 +193,10 @@
             <div class="qa-icon mb-3"><i class="bi bi-cash-coin"></i></div>
             <h5 class="fw-bold">Meal Plans</h5>
             <p class="text-muted small">Explore meal plan options and pricing</p>
-            <button class="btn btn-outline-secondary w-100 mt-auto">Compare Plans</button>
+            <!-- 🔗 link to meal plans -->
+            <a href="meal-plans.html" class="btn btn-outline-secondary w-100 mt-auto">
+              Compare Plans
+            </a>
           </div>
         </div>
 
@@ -192,7 +206,10 @@
             <div class="qa-icon mb-3"><i class="bi bi-question-circle"></i></div>
             <h5 class="fw-bold">Student Services</h5>
             <p class="text-muted small">Dietary accommodations and support</p>
-            <button class="btn btn-outline-secondary w-100 mt-auto">Get Help</button>
+            <!-- 🔗 link to student services -->
+            <a href="student-services.html" class="btn btn-outline-secondary w-100 mt-auto">
+              Get Help
+            </a>
           </div>
         </div>
 
@@ -235,7 +252,7 @@
       .catch(err => console.error("Error loading navbar:", err));
   </script>
 
-  <!-- Footer loader (unchanged, just moved under navbar script) -->
+  <!-- Footer loader -->
   <script>
     fetch("footer.html")
       .then(res => res.text())
