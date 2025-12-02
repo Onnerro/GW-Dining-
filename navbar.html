@@ -33,8 +33,106 @@
         </li>
       </ul>
 
-      <!-- Cart button -->
-      <div class="d-flex align-items-center ms-lg-3">
+      <!-- User auth + Cart button -->
+      <div class="d-flex align-items-center ms-lg-3 gap-3">
+
+        <!-- 🔐 User login/profile dropdown -->
+        <div class="dropdown" id="userAuthDropdown">
+          <button
+            class="btn btn-outline-primary btn-sm d-flex align-items-center"
+            type="button"
+            id="userMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <!-- Icon + label will change based on login state -->
+            <i class="bi bi-box-arrow-in-right me-1" id="userMenuIcon"></i>
+            <span id="userMenuLabel">Login</span>
+          </button>
+
+          <div
+            class="dropdown-menu dropdown-menu-end p-3"
+            style="min-width: 260px;"
+          >
+            <!-- LOGIN FORM (shown when logged OUT) -->
+            <form id="loginForm" class="small">
+              <div class="mb-2">
+                <label for="loginUsername" class="form-label mb-1">Name</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="loginUsername"
+                  placeholder="e.g. Eugene Saka"
+                  required
+                />
+              </div>
+
+              <div class="mb-2">
+                <label for="loginGwId" class="form-label mb-1">GWID</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="loginGwId"
+                  placeholder="e.g. G34488884"
+                  required
+                />
+                <div class="form-text small">
+                  Must start with <strong>G</strong> + 8 digits.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label mb-1">Password</label>
+                <input
+                  type="password"
+                  class="form-control form-control-sm"
+                  id="loginPassword"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-sm w-100">
+                Login
+              </button>
+            </form>
+
+            <!-- PROFILE SUMMARY (shown when logged IN) -->
+            <div id="profileSummary" class="small d-none">
+              <div class="d-flex align-items-center mb-2">
+                <div
+                  class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2"
+                  style="width: 32px; height: 32px;"
+                >
+                  <i class="bi bi-person"></i>
+                </div>
+                <div>
+                  <div class="fw-semibold" id="profileName">Student Name</div>
+                  <div class="text-muted" id="profileGwId">G00000000</div>
+                </div>
+              </div>
+
+              <hr class="my-2" />
+
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm w-100 mb-2"
+                id="viewProfileBtn"
+              >
+                View Profile
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-link btn-sm text-danger w-100 p-0"
+                id="logoutBtn"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🛒 Cart button -->
         <button
           class="btn btn-link position-relative p-0 border-0"
           type="button"

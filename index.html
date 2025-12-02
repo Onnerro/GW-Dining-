@@ -25,7 +25,6 @@
 
   <!-- ✅ SHARED NAVBAR (loaded from navbar.html) -->
   <div id="navbar-container"></div>
-
   <!-- HERO IMAGE SLIDER (fixed text, 3s interval) -->
   <section class="hero-carousel position-relative">
 
@@ -251,28 +250,33 @@
     const CURRENT_PAGE = "home";
 
     fetch("navbar.html")
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("navbar-container").innerHTML = html;
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("navbar-container").innerHTML = html;
 
-        // Highlight active nav link
-        const activeLink = document.querySelector(
-          `.gw-nav-link[data-page="${CURRENT_PAGE}"]`
-        );
-        if (activeLink) activeLink.classList.add("active");
+    // Highlight active nav link
+    const activeLink = document.querySelector(
+      `.gw-nav-link[data-page="${CURRENT_PAGE}"]`
+    );
+    if (activeLink) activeLink.classList.add("active");
 
-        // Now that navbar + offcanvas exist, hook up cart logic
-        if (window.setupCartOffcanvasEvents) {
-          window.setupCartOffcanvasEvents();
-        }
-        if (window.updateCartCountDisplay) {
-          window.updateCartCountDisplay();
-        }
-        if (window.renderCartPanel) {
-          window.renderCartPanel();
-        }
-      })
-      .catch(err => console.error("Error loading navbar:", err));
+    // Cart logic
+    if (window.setupCartOffcanvasEvents) {
+      window.setupCartOffcanvasEvents();
+    }
+    if (window.updateCartCountDisplay) {
+      window.updateCartCountDisplay();
+    }
+    if (window.renderCartPanel) {
+      window.renderCartPanel();
+    }
+
+    // ✅ NOW that navbar exists, set up login/profile UI
+    if (window.setupAuthUI) {
+      window.setupAuthUI();
+    }
+  })
+  .catch(err => console.error("Error loading navbar:", err));
   </script>
 
   <!-- Footer loader -->

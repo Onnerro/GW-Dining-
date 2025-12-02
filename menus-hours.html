@@ -184,28 +184,33 @@
     const CURRENT_PAGE = "menus"; // highlight Menus & Hours in navbar
 
     fetch("navbar.html")
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("navbar-container").innerHTML = html;
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("navbar-container").innerHTML = html;
 
-        // Highlight active link
-        const activeLink = document.querySelector(
-          `.gw-nav-link[data-page="${CURRENT_PAGE}"]`
-        );
-        if (activeLink) activeLink.classList.add("active");
+    // Highlight active nav link
+    const activeLink = document.querySelector(
+      `.gw-nav-link[data-page="${CURRENT_PAGE}"]`
+    );
+    if (activeLink) activeLink.classList.add("active");
 
-        // Cart wiring – now that navbar/offcanvas exist
-        if (window.setupCartOffcanvasEvents) {
-          window.setupCartOffcanvasEvents();
-        }
-        if (window.updateCartCountDisplay) {
-          window.updateCartCountDisplay();
-        }
-        if (window.renderCartPanel) {
-          window.renderCartPanel();
-        }
-      })
-      .catch(err => console.error("Navbar load error:", err));
+    // Cart logic
+    if (window.setupCartOffcanvasEvents) {
+      window.setupCartOffcanvasEvents();
+    }
+    if (window.updateCartCountDisplay) {
+      window.updateCartCountDisplay();
+    }
+    if (window.renderCartPanel) {
+      window.renderCartPanel();
+    }
+
+    // ✅ NOW that navbar exists, set up login/profile UI
+    if (window.setupAuthUI) {
+      window.setupAuthUI();
+    }
+  })
+  .catch(err => console.error("Error loading navbar:", err));
   </script>
 
   <!-- 🔹 Footer loader -->

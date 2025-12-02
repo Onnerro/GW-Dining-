@@ -1,5 +1,27 @@
-// ================== CART LOGIC ==================
+// ================== CART & USER CONSTANTS ==================
 const CART_KEY = "gwDiningCart";
+const USER_KEY = "gwDiningUser"; // for simple local auth
+
+// ================== USER AUTH HELPERS ==================
+function loadUser() {
+  try {
+    const raw = localStorage.getItem(USER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    console.error("Error loading user:", e);
+    return null;
+  }
+}
+
+function saveUser(user) {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
+function clearUser() {
+  localStorage.removeItem(USER_KEY);
+}
+
+// ================== CART LOGIC ==================
 
 // ---------- Cart helpers ----------
 function loadCart() {
@@ -245,6 +267,10 @@ function handleCheckout() {
       : generateTicketNumber("P");
 
   const modeContentEl = document.getElementById("cartModeContent");
+  const currentUser = loadUser(); // 👈 grab logged-in user if any
+  const userLine = currentUser
+    ? `<p class="small mb-1"><strong>Name:</strong> ${currentUser.name} &middot; <strong>GWID:</strong> ${currentUser.gwid}</p>`
+    : "";
 
   if (currentOrderMode === "dinein") {
     // Dine-in: just show ticket
@@ -253,6 +279,7 @@ function handleCheckout() {
         <div class="border rounded p-3 bg-light text-start">
           <p class="text-uppercase small text-muted mb-1">Dine-In Ticket</p>
           <p class="h3 fw-bold mb-1">${ticketNumber}</p>
+          ${userLine}
           <p class="small mb-3">
             Show this ticket number at the cashier to complete payment and receive your order.
           </p>
@@ -282,6 +309,7 @@ function handleCheckout() {
         <div class="card border-0 shadow-sm">
           <div class="card-body">
             <h6 class="text-uppercase text-muted mb-2">Pickup payment</h6>
+            ${userLine}
             <p class="small text-muted">
               Enter your card details to pay online and receive a pickup ticket.
             </p>
@@ -430,6 +458,109 @@ document.addEventListener("click", (e) => {
     if (name) removeItem(name);
   }
 });
+
+// ================== USER AUTH UI SETUP ==================
+function setupAuthUI() {
+  const userMenuButton = document.getElementById("userMenuButton");
+  const userMenuIcon = document.getElementById("userMenuIcon");
+  const userMenuLabel = document.getElementById("userMenuLabel");
+  const loginForm = document.getElementById("loginForm");
+  const profileSummary = document.getElementById("profileSummary");
+  const profileName = document.getElementById("profileName");
+  const profileGwId = document.getElementById("profileGwId");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const viewProfileBtn = document.getElementById("viewProfileBtn");
+
+  if (!userMenuButton || !userMenuIcon || !userMenuLabel) return;
+
+  function syncAuthState() {
+    const user = loadUser();
+
+    if (user) {
+      // logged in
+      userMenuIcon.className = "bi bi-person-circle me-1";
+      userMenuLabel.textContent = user.name.split(" ")[0] || "Profile";
+
+      if (loginForm) loginForm.classList.add("d-none");
+      if (profileSummary) profileSummary.classList.remove("d-none");
+      if (profileName) profileName.textContent = user.name;
+      if (profileGwId) profileGwId.textContent = user.gwid;
+    } else {
+      // logged out
+      userMenuIcon.className = "bi bi-box-arrow-in-right me-1";
+      userMenuLabel.textContent = "Login";
+
+      if (loginForm) loginForm.classList.remove("d-none");
+      if (profileSummary) profileSummary.classList.add("d-none");
+    }
+  }
+
+  // Login submit
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById("loginUsername");
+      const gwidInput = document.getElementById("loginGwId");
+      const passInput = document.getElementById("loginPassword");
+
+      const name = nameInput ? nameInput.value.trim() : "";
+      const gwid = gwidInput ? gwidInput.value.trim() : "";
+      const password = passInput ? passInput.value : "";
+
+      if (!name || !gwid || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Basic GWID validation: starts with G + 8 digits
+      const gwidPattern = /^G\d{8}$/i;
+      if (!gwidPattern.test(gwid)) {
+        alert("Invalid GWID. It must start with 'G' followed by 8 digits (e.g., G34488884).");
+        return;
+      }
+
+      saveUser({ name, gwid, password });
+      syncAuthState();
+
+      // Close dropdown if Bootstrap is available
+      try {
+        if (window.bootstrap && bootstrap.Dropdown) {
+          const dd = bootstrap.Dropdown.getOrCreateInstance(userMenuButton);
+          dd.hide();
+        }
+      } catch (err) {
+        console.warn("Bootstrap dropdown hide failed:", err);
+      }
+
+      alert("Login successful.");
+    });
+  }
+
+  // Logout
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      clearUser();
+      syncAuthState();
+      alert("You have been logged out.");
+    });
+  }
+
+  // Simple profile view (for demo)
+  if (viewProfileBtn) {
+    viewProfileBtn.addEventListener("click", () => {
+      const user = loadUser();
+      if (!user) {
+        alert("No user is logged in.");
+        return;
+      }
+      alert(`Profile\n\nName: ${user.name}\nGWID: ${user.gwid}`);
+    });
+  }
+
+  // Initial state on load
+  syncAuthState();
+}
 
 // ================== MENU + FILTER LOGIC (Menus & Hours) ==================
 let allMenuItems = [];
@@ -613,39 +744,39 @@ function saveLocationReviews(data) {
 
 // Google Maps callback (used by script tag in dining-locations.html)
 function initGWMap() {
-    if (!mapElement) return; // not on locations page
-  
-    fetch("data/dining-locations.json")
-      .then((res) => res.json())
-      .then((data) => {
-        locationsData = data || [];
-        setupLocationsMap();
-        setupLocationFilters();     // renders initial cards
-        setupLocationCardClicks();
-  
-        // NEW: if a specific location is passed via ?loc=, focus it on the map
-        const params = new URLSearchParams(window.location.search);
-        const locId = params.get("loc");
-  
-        if (locId) {
-          // make sure the marker exists before trying to focus
-          if (locationMarkers[locId]) {
-            // small timeout just to let layout/fitBounds settle
-            setTimeout(() => {
-              focusLocationOnMap(locId); // pans + zooms + selects card
-            }, 300);
-          }
+  if (!mapElement) return; // not on locations page
+
+  fetch("data/dining-locations.json")
+    .then((res) => res.json())
+    .then((data) => {
+      locationsData = data || [];
+      setupLocationsMap();
+      setupLocationFilters(); // renders initial cards
+      setupLocationCardClicks();
+
+      // NEW: if a specific location is passed via ?loc=, focus it on the map
+      const params = new URLSearchParams(window.location.search);
+      const locId = params.get("loc");
+
+      if (locId) {
+        // make sure the marker exists before trying to focus
+        if (locationMarkers[locId]) {
+          // small timeout just to let layout/fitBounds settle
+          setTimeout(() => {
+            focusLocationOnMap(locId); // pans + zooms + selects card
+          }, 300);
         }
-      })
-      .catch((err) => {
-        console.error("Error loading dining locations:", err);
-      });
-  }
+      }
+    })
+    .catch((err) => {
+      console.error("Error loading dining locations:", err);
+    });
+}
 // expose for Google Maps callback
 window.initGWMap = initGWMap;
 
 function setupLocationsMap() {
-  const gwCenter = { lat: 38.9105, lng: -77.0670 };
+  const gwCenter = { lat: 38.9105, lng: -77.067 };
 
   locationsMap = new google.maps.Map(mapElement, {
     center: gwCenter,
@@ -993,6 +1124,8 @@ function highlightLocationCard(id) {
 
 // ================== INIT (runs on every page) ==================
 document.addEventListener("DOMContentLoaded", () => {
+ 
+
   // cart
   updateCartCountDisplay();
   setupCartOffcanvasEvents();
@@ -1041,33 +1174,34 @@ document.addEventListener("DOMContentLoaded", () => {
       item.classList.add("is-open");
     }
   });
-    // Dietary accommodation slide-out form
-    const openBtn = document.getElementById("openDietaryFormBtn");
-    const panel = document.getElementById("dietaryFormPanel");
-    const closeBtn = document.getElementById("dietaryFormClose");
-    const form = document.getElementById("dietaryForm");
-  
-    if (openBtn && panel) {
-      openBtn.addEventListener("click", () => {
-        panel.classList.add("is-visible");
-      });
-    }
-  
-    if (closeBtn && panel) {
-      closeBtn.addEventListener("click", () => {
-        panel.classList.remove("is-visible");
-      });
-    }
-  
-    if (form && panel) {
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-  
-        // Simple notification
-        alert("Your dietary accommodation request has been sent.");
-  
-        form.reset();
-        panel.classList.remove("is-visible");
-      });
-    }
+
+  // Dietary accommodation slide-out form
+  const openBtn = document.getElementById("openDietaryFormBtn");
+  const panel = document.getElementById("dietaryFormPanel");
+  const closeBtn = document.getElementById("dietaryFormClose");
+  const form = document.getElementById("dietaryForm");
+
+  if (openBtn && panel) {
+    openBtn.addEventListener("click", () => {
+      panel.classList.add("is-visible");
+    });
+  }
+
+  if (closeBtn && panel) {
+    closeBtn.addEventListener("click", () => {
+      panel.classList.remove("is-visible");
+    });
+  }
+
+  if (form && panel) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Simple notification
+      alert("Your dietary accommodation request has been sent.");
+
+      form.reset();
+      panel.classList.remove("is-visible");
+    });
+  }
 });

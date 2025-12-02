@@ -1577,3 +1577,108 @@ body {
   max-width: 600px;
   margin: 0 auto 20px auto;
 }
+
+/* Right side: login + cart aligned nicely */
+.navbar .navbar-collapse > .d-flex.align-items-center.ms-lg-3 {
+  gap: 0.75rem;              /* space between login and cart */
+}
+
+/* Login/profile button styling */
+#userMenuButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  border-radius: 999px;      /* pill shape */
+  border-width: 1px;
+  white-space: nowrap;
+}
+
+/* Icon + label sizing inside the button */
+#userMenuIcon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+#userMenuLabel {
+  line-height: 1;
+}
+
+/* Make sure cart icon aligns vertically with login button */
+.navbar .cart-count-badge {
+  font-size: 0.65rem;
+}
+
+.navbar .bi-cart3 {
+  vertical-align: middle;
+}
+
+/* Dropdown panel that holds login form / profile */
+.user-dropdown-menu {
+  min-width: 260px;
+  max-width: 320px;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+  font-size: 0.8rem;
+}
+
+/* Compact login form spacing */
+.user-login-form .form-label-sm {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.user-login-form .form-control-sm {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.55rem;
+}
+
+.user-login-form .btn-primary {
+  width: 100%;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+}
+
+/* Profile summary view inside dropdown */
+.user-profile-summary {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+}
+
+.user-profile-summary .profile-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.user-profile-summary .profile-gwid {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Profile buttons (view profile + logout) */
+.user-profile-summary .btn {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.6rem;
+}
+
+@media (max-width: 991.98px) {
+  /* Make dropdown stretch nicely on mobile */
+  .user-dropdown-menu {
+    min-width: 100%;
+    max-width: 100%;
+    box-shadow: none;
+    border-radius: 0.5rem;
+  }
+
+  /* Slight margin so login button doesn't jam against cart on mobile */
+  #userMenuButton {
+    margin-bottom: 0.35rem;
+  }
+}
