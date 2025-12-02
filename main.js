@@ -109,10 +109,19 @@ function clearCart() {
 
 let currentOrderMode = null; // "dinein" or "pickup"
 
+// pending order after ticket is generated, before final “Checkout”
+let pendingOrder = null; // { ticketNumber, total, mode }
+let checkoutStage = "review"; // "review" | "ready"
+
 function generateTicketNumber(prefix) {
   const base = Date.now().toString().slice(-4);
   const rand = Math.floor(Math.random() * 90 + 10); // 10–99
   return `${prefix}${base}${rand}`;
+}
+
+function setCheckoutButtonLabel(label) {
+  const btn = document.getElementById("cartCheckoutBtn");
+  if (btn) btn.textContent = label;
 }
 
 // main render of items + summary
@@ -232,7 +241,7 @@ function renderCartPanel() {
   resetCheckoutUI();
 }
 
-// Reset ticket / payment UI
+// Reset ticket / payment UI + footer button
 function resetCheckoutUI() {
   const modeContentEl = document.getElementById("cartModeContent");
   if (modeContentEl && loadCart().length) {
@@ -246,9 +255,61 @@ function resetCheckoutUI() {
   if (dinePanel) dinePanel.classList.add("d-none");
   if (pickupPanel) pickupPanel.classList.add("d-none");
   if (pickupTicket) pickupTicket.classList.add("d-none");
+
+  pendingOrder = null;
+  checkoutStage = "review";
+  setCheckoutButtonLabel("Proceed to checkout");
 }
 
-// When user clicks "Proceed to checkout"
+// finalize checkout after ticket exists and footer button says “Checkout”
+function finalizeCheckout() {
+  if (!pendingOrder) return;
+
+  const { ticketNumber, total, mode } = pendingOrder;
+
+  // update user discount + orders if logged in
+  const user = loadUser();
+  if (user) {
+    const currentScore =
+      typeof user.discountScore === "number" ? user.discountScore : 0;
+    const orders = Array.isArray(user.orders) ? user.orders : [];
+
+    orders.push({
+      ticket: ticketNumber,
+      mode,
+      total,
+      date: new Date().toISOString()
+    });
+
+    user.discountScore = currentScore + 10; // simple +10 pts per order
+    user.orders = orders;
+    saveUser(user);
+  }
+
+  alert(
+    `Checkout successful!\n\nTicket: ${ticketNumber}\nTotal: ${formatMoney(
+      total
+    )}`
+  );
+
+  clearCart();
+  pendingOrder = null;
+  checkoutStage = "review";
+  setCheckoutButtonLabel("Proceed to checkout");
+
+  // close cart offcanvas
+  const offcanvasEl = document.getElementById("cartOffcanvas");
+  try {
+    if (offcanvasEl && window.bootstrap && bootstrap.Offcanvas) {
+      const instance = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+      instance.hide();
+    }
+  } catch (err) {
+    console.warn("Offcanvas hide failed:", err);
+  }
+}
+
+// When user clicks "Proceed to checkout" / "Checkout"
 function handleCheckout() {
   const cart = loadCart();
   if (!cart.length) {
@@ -273,7 +334,7 @@ function handleCheckout() {
     : "";
 
   if (currentOrderMode === "dinein") {
-    // Dine-in: just show ticket
+    // Dine-in: show ticket, then footer button becomes "Checkout"
     if (modeContentEl) {
       modeContentEl.innerHTML = `
         <div class="border rounded p-3 bg-light text-start">
@@ -302,8 +363,12 @@ function handleCheckout() {
       totalEl.textContent = formatMoney(total);
       dinePanel.classList.remove("d-none");
     }
+
+    pendingOrder = { ticketNumber, total, mode: "dinein" };
+    checkoutStage = "ready";
+    setCheckoutButtonLabel("Checkout");
   } else {
-    // Pickup: payment form + ticket
+    // Pickup: payment form + ticket AFTER Pay button
     if (modeContentEl) {
       modeContentEl.innerHTML = `
         <div class="card border-0 shadow-sm">
@@ -356,27 +421,30 @@ function handleCheckout() {
       if (payBtn && ticketArea) {
         payBtn.addEventListener("click", (e) => {
           e.preventDefault();
+
+          const cardName = document.getElementById("cardName");
+          const cardNumber = document.getElementById("cardNumber");
+          const cardExpiry = document.getElementById("cardExpiry");
+          const cardCvv = document.getElementById("cardCvv");
+
+          if (
+            !cardName.value.trim() ||
+            !cardNumber.value.trim() ||
+            !cardExpiry.value.trim() ||
+            !cardCvv.value.trim()
+          ) {
+            alert("Please fill in all card details.");
+            return;
+          }
+
           ticketArea.classList.remove("d-none");
+
+          // now footer button becomes "Checkout" and clicking it finalizes
+          pendingOrder = { ticketNumber, total, mode: "pickup" };
+          checkoutStage = "ready";
+          setCheckoutButtonLabel("Checkout");
         });
       }
-    }
-
-    const pickupPanel = document.getElementById("pickupPaymentPanel");
-    const pickupTicketPanel = document.getElementById("pickupTicketPanel");
-    const pickupCodeEl = document.getElementById("pickupTicketCode");
-    const pickupTotalEl = document.getElementById("pickupTicketTotal");
-    const pickupPayBtn2 = document.getElementById("pickupPayBtn");
-
-    if (pickupPanel) pickupPanel.classList.remove("d-none");
-    if (pickupTicketPanel) pickupTicketPanel.classList.add("d-none");
-
-    if (pickupPayBtn2 && pickupTicketPanel && pickupCodeEl && pickupTotalEl) {
-      pickupPayBtn2.onclick = (e) => {
-        e.preventDefault();
-        pickupCodeEl.textContent = ticketNumber;
-        pickupTotalEl.textContent = formatMoney(total);
-        pickupTicketPanel.classList.remove("d-none");
-      };
     }
   }
 }
@@ -416,13 +484,20 @@ function setupCartOffcanvasEvents() {
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      handleCheckout();
+      if (checkoutStage === "review") {
+        handleCheckout();
+      } else if (checkoutStage === "ready") {
+        finalizeCheckout();
+      }
     });
   }
 
   document.addEventListener("shown.bs.offcanvas", (event) => {
     if (event.target.id === "cartOffcanvas") {
       renderCartPanel();
+      checkoutStage = "review";
+      pendingOrder = null;
+      setCheckoutButtonLabel("Proceed to checkout");
     }
   });
 }
@@ -473,6 +548,56 @@ function setupAuthUI() {
 
   if (!userMenuButton || !userMenuIcon || !userMenuLabel) return;
 
+  function renderProfileExtra(user) {
+    if (!profileSummary) return;
+
+    const score =
+      typeof user.discountScore === "number" ? user.discountScore : 0;
+    const orders = Array.isArray(user.orders) ? user.orders : [];
+
+    let ordersHtml = "";
+    if (!orders.length) {
+      ordersHtml =
+        '<p class="small mb-0 text-muted">No orders yet.</p>';
+    } else {
+      ordersHtml =
+        '<div class="small text-muted mb-1">My Orders</div>' +
+        '<ul class="list-unstyled small mb-0">' +
+        orders
+          .map((o) => {
+            const dateStr = new Date(o.date).toLocaleString();
+            const modeLabel = o.mode === "pickup" ? "Pickup" : "Dine-In";
+            return `<li>Ticket: <strong>${o.ticket}</strong><br>${modeLabel} · ${formatMoney(
+              o.total
+            )} · ${dateStr}</li>`;
+          })
+          .join("") +
+        "</ul>";
+    }
+
+    let extra = document.getElementById("profileExtraInfo");
+    if (!extra) {
+      extra = document.createElement("div");
+      extra.id = "profileExtraInfo";
+      extra.className = "mt-2 pt-2 border-top";
+      profileSummary.appendChild(extra);
+    }
+
+    extra.innerHTML = `
+      <div class="small mb-1">
+        <strong>Discount Score:</strong> ${score} pts
+      </div>
+      ${ordersHtml}
+    `;
+  }
+
+  function clearProfileExtra() {
+    const extra = document.getElementById("profileExtraInfo");
+    if (extra && extra.parentNode) {
+      extra.parentNode.removeChild(extra);
+    }
+  }
+
   function syncAuthState() {
     const user = loadUser();
 
@@ -485,6 +610,11 @@ function setupAuthUI() {
       if (profileSummary) profileSummary.classList.remove("d-none");
       if (profileName) profileName.textContent = user.name;
       if (profileGwId) profileGwId.textContent = user.gwid;
+
+      // hide "View Profile" button and show inline info instead
+      if (viewProfileBtn) viewProfileBtn.classList.add("d-none");
+
+      renderProfileExtra(user);
     } else {
       // logged out
       userMenuIcon.className = "bi bi-box-arrow-in-right me-1";
@@ -492,6 +622,9 @@ function setupAuthUI() {
 
       if (loginForm) loginForm.classList.remove("d-none");
       if (profileSummary) profileSummary.classList.add("d-none");
+
+      if (viewProfileBtn) viewProfileBtn.classList.remove("d-none");
+      clearProfileExtra();
     }
   }
 
@@ -520,7 +653,16 @@ function setupAuthUI() {
         return;
       }
 
-      saveUser({ name, gwid, password });
+      // new user object with starter discount + empty orders
+      const newUser = {
+        name,
+        gwid,
+        password,
+        discountScore: 0,
+        orders: []
+      };
+
+      saveUser(newUser);
       syncAuthState();
 
       // Close dropdown if Bootstrap is available
@@ -546,17 +688,7 @@ function setupAuthUI() {
     });
   }
 
-  // Simple profile view (for demo)
-  if (viewProfileBtn) {
-    viewProfileBtn.addEventListener("click", () => {
-      const user = loadUser();
-      if (!user) {
-        alert("No user is logged in.");
-        return;
-      }
-      alert(`Profile\n\nName: ${user.name}\nGWID: ${user.gwid}`);
-    });
-  }
+  // NOTE: viewProfileBtn no longer shows an alert; info is inline in dropdown now
 
   // Initial state on load
   syncAuthState();
@@ -759,9 +891,7 @@ function initGWMap() {
       const locId = params.get("loc");
 
       if (locId) {
-        // make sure the marker exists before trying to focus
         if (locationMarkers[locId]) {
-          // small timeout just to let layout/fitBounds settle
           setTimeout(() => {
             focusLocationOnMap(locId); // pans + zooms + selects card
           }, 300);
@@ -1124,7 +1254,8 @@ function highlightLocationCard(id) {
 
 // ================== INIT (runs on every page) ==================
 document.addEventListener("DOMContentLoaded", () => {
- 
+  // user auth UI
+  setupAuthUI();
 
   // cart
   updateCartCountDisplay();
