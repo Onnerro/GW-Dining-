@@ -1682,3 +1682,58 @@ body {
     margin-bottom: 0.35rem;
   }
 }
+
+#routeInfoBox {
+  transition: all 0.3s ease;
+}
+
+/* === Directions overlay on Dining Locations map === */
+#routeInfoBox,
+#routeInfoBox * {
+  color: #000;              /* make text readable */
+}
+
+#routeInfoBox {
+  position: absolute;
+  top: 80px;
+  left: 16px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  font-size: 0.9rem;
+}
+
+/* Walk / Drive toggle buttons */
+#routeModeControl,
+#routeModeControl * {
+  color: #000;
+}
+
+#routeModeControl {
+  position: absolute;
+  top: 80px;
+  right: 16px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 6px 8px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  display: flex;
+  gap: 4px;
+}
+
+#routeModeControl button {
+  border: none;
+  background: transparent;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+#routeModeControl button.active {
+  background: #0d6efd;      /* bootstrap primary */
+  color: #fff;
+}

@@ -857,6 +857,16 @@ let locationsInfoWindow = null;
 let locationMarkers = {};
 let activeCampusFilter = "all";
 
+// Directions + user location
+let directionsService = null;
+let directionsRenderer = null;
+let userLocationMarker = null;
+let userPositionLatLng = null;
+let currentTravelMode = "WALKING"; // "WALKING" | "DRIVING"
+
+// For reusing last route info when cards re-render
+let lastRouteInfo = null; // { locationId, distanceText, durationText }
+
 // ---- Reviews (localStorage) ----
 const REVIEWS_KEY = "gwDiningLocationReviews";
 
@@ -872,6 +882,235 @@ function loadLocationReviews() {
 
 function saveLocationReviews(data) {
   localStorage.setItem(REVIEWS_KEY, JSON.stringify(data));
+}
+
+// ---------- ROUTE INFO BOX + TRAVEL MODE TOGGLE ----------
+let routeInfoBox = null;
+let travelModeControl = null;
+
+function createRouteInfoBox() {
+  if (!mapElement || routeInfoBox) return;
+
+  routeInfoBox = document.createElement("div");
+  routeInfoBox.id = "routeInfoBox";
+  routeInfoBox.style.position = "absolute";
+  routeInfoBox.style.top = "80px";
+  routeInfoBox.style.left = "20px";
+  routeInfoBox.style.zIndex = "9999";
+  routeInfoBox.style.background = "white";
+  routeInfoBox.style.padding = "10px 14px";
+  routeInfoBox.style.borderRadius = "8px";
+  routeInfoBox.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+  routeInfoBox.style.fontSize = "14px";
+  routeInfoBox.style.fontWeight = "500";
+  routeInfoBox.style.display = "none";
+  routeInfoBox.innerHTML = "";
+  mapElement.appendChild(routeInfoBox);
+}
+
+function showRouteInfo(distanceText, durationText) {
+  createRouteInfoBox();
+  routeInfoBox.innerHTML = `
+    <div><strong>Distance:</strong> ${distanceText}</div>
+    <div><strong>Estimated time:</strong> ${durationText} (${currentTravelMode.toLowerCase()})</div>
+  `;
+  routeInfoBox.style.display = "block";
+}
+
+function hideRouteInfo() {
+  if (routeInfoBox) {
+    routeInfoBox.style.display = "none";
+  }
+}
+
+function createTravelModeControl() {
+  if (!mapElement || travelModeControl) return;
+
+  travelModeControl = document.createElement("div");
+  travelModeControl.id = "travelModeToggle";
+  travelModeControl.style.position = "absolute";
+  travelModeControl.style.top = "20px";
+  travelModeControl.style.right = "20px";
+  travelModeControl.style.zIndex = "9999";
+  travelModeControl.style.background = "white";
+  travelModeControl.style.borderRadius = "999px";
+  travelModeControl.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+  travelModeControl.style.overflow = "hidden";
+  travelModeControl.style.display = "flex";
+
+  const walkBtn = document.createElement("button");
+  walkBtn.type = "button";
+  walkBtn.textContent = "Walk";
+  walkBtn.style.border = "none";
+  walkBtn.style.padding = "6px 12px";
+  walkBtn.style.fontSize = "13px";
+  walkBtn.style.cursor = "pointer";
+  walkBtn.style.background = "#005daa";
+  walkBtn.style.color = "white";
+  walkBtn.dataset.mode = "WALKING";
+
+  const driveBtn = document.createElement("button");
+  driveBtn.type = "button";
+  driveBtn.textContent = "Drive";
+  driveBtn.style.border = "none";
+  driveBtn.style.padding = "6px 12px";
+  driveBtn.style.fontSize = "13px";
+  driveBtn.style.cursor = "pointer";
+  driveBtn.style.background = "white";
+  driveBtn.style.color = "#333";
+  driveBtn.dataset.mode = "DRIVING";
+
+  const setActiveButton = (mode) => {
+    if (mode === "WALKING") {
+      walkBtn.style.background = "#005daa";
+      walkBtn.style.color = "white";
+      driveBtn.style.background = "white";
+      driveBtn.style.color = "#333";
+    } else {
+      driveBtn.style.background = "#005daa";
+      driveBtn.style.color = "white";
+      walkBtn.style.background = "white";
+      walkBtn.style.color = "#333";
+    }
+  };
+
+  walkBtn.addEventListener("click", () => {
+    currentTravelMode = "WALKING";
+    setActiveButton("WALKING");
+    // if there was a last route, re-run it with new mode
+    if (lastRouteInfo && lastRouteInfo.locationId) {
+      routeFromUserToLocation(lastRouteInfo.locationId);
+    }
+  });
+
+  driveBtn.addEventListener("click", () => {
+    currentTravelMode = "DRIVING";
+    setActiveButton("DRIVING");
+    if (lastRouteInfo && lastRouteInfo.locationId) {
+      routeFromUserToLocation(lastRouteInfo.locationId);
+    }
+  });
+
+  setActiveButton(currentTravelMode);
+
+  travelModeControl.appendChild(walkBtn);
+  travelModeControl.appendChild(driveBtn);
+  mapElement.appendChild(travelModeControl);
+}
+
+function setUserLocation(latLng) {
+  userPositionLatLng = latLng;
+
+  if (!locationsMap) return;
+
+  if (!userLocationMarker) {
+    userLocationMarker = new google.maps.Marker({
+      position: latLng,
+      map: locationsMap,
+      title: "You are here",
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 6,
+        fillColor: "#0066ff",
+        fillOpacity: 1,
+        strokeColor: "#ffffff",
+        strokeWeight: 2
+      }
+    });
+  } else {
+    userLocationMarker.setPosition(latLng);
+    userLocationMarker.setMap(locationsMap);
+  }
+}
+
+// Update distance/time text inside the location card
+function updateLocationDistanceUI(locationId, distanceText, durationText) {
+  const el = document.querySelector(`[data-distance-for="${locationId}"]`);
+  if (!el) return;
+
+  const modeLabel =
+    currentTravelMode === "DRIVING" ? "driving" : "walking";
+
+  el.innerHTML = `
+    <i class="bi bi-geo-alt"></i>
+    <span>${distanceText} · ${durationText} (${modeLabel})</span>
+  `;
+}
+
+// Core routing function used when clicking "Get directions"
+function routeFromUserToLocation(locationId) {
+  hideRouteInfo();
+
+  if (!locationsMap || !directionsService || !directionsRenderer) {
+    focusLocationOnMap(locationId);
+    return;
+  }
+
+  const loc = locationsData.find((l) => l.id === locationId);
+  if (!loc) return;
+
+  const destination = { lat: loc.lat, lng: loc.lng };
+
+  const startRouting = (origin) => {
+    setUserLocation(origin);
+
+    directionsRenderer.setMap(locationsMap);
+    directionsService.route(
+      {
+        origin,
+        destination,
+        travelMode: google.maps.TravelMode[currentTravelMode]
+      },
+      (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsRenderer.setDirections(result);
+
+          const leg = result.routes[0].legs[0];
+          const distanceText = leg.distance.text; // e.g., "0.5 mi"
+          const durationText = leg.duration.text; // e.g., "9 mins"
+
+          showRouteInfo(distanceText, durationText);
+          updateLocationDistanceUI(locationId, distanceText, durationText);
+
+          lastRouteInfo = {
+            locationId,
+            distanceText,
+            durationText
+          };
+
+          if (result.routes[0].bounds) {
+            locationsMap.fitBounds(result.routes[0].bounds);
+          }
+        } else {
+          console.error("Directions failed:", status);
+          alert("Unable to calculate route.");
+          focusLocationOnMap(locationId);
+        }
+      }
+    );
+  };
+
+  if (userPositionLatLng) {
+    startRouting(userPositionLatLng);
+  } else if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const origin = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        };
+        startRouting(origin);
+      },
+      (err) => {
+        console.error(err);
+        alert("Cannot access your location. Please enable location services.");
+        focusLocationOnMap(locationId);
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by your browser.");
+    focusLocationOnMap(locationId);
+  }
 }
 
 // Google Maps callback (used by script tag in dining-locations.html)
@@ -919,6 +1158,16 @@ function setupLocationsMap() {
   locationsInfoWindow = new google.maps.InfoWindow();
   locationMarkers = {};
 
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer({
+    map: locationsMap,
+    suppressMarkers: false,
+    preserveViewport: false
+  });
+
+  createTravelModeControl();
+  createRouteInfoBox();
+
   locationsData.forEach((loc) => {
     const marker = new google.maps.Marker({
       position: { lat: loc.lat, lng: loc.lng },
@@ -938,12 +1187,61 @@ function setupLocationsMap() {
 
     marker.addListener("click", () => {
       const infoHtml = `
-        <div class="gw-map-info">
-          <h6 class="mb-1">${loc.name}</h6>
-          <p class="mb-1 small text-muted">${loc.address}</p>
-          <p class="small mb-0">${loc.type}</p>
+        <div style="
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          color:#222 !important;
+          padding:12px;
+          border-radius:8px;
+          border:1px solid #d9d9d9;
+          box-shadow:0 4px 12px rgba(0,0,0,0.15);
+          max-width:260px;
+        ">
+          
+          <!-- Title -->
+          <div style="font-size:15px; font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+            <i class="bi bi-shop" style="font-size:18px; color:#1a73e8;"></i>
+            ${loc.name}
+          </div>
+    
+          <!-- Address -->
+          <div style="display:flex; align-items:flex-start; gap:6px; margin-bottom:4px;">
+            <i class="bi bi-geo-alt-fill" style="color:#d93025;"></i>
+            <span style="font-size:13px; color:#444;">
+              ${loc.address}
+            </span>
+          </div>
+    
+          <!-- Type -->
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;">
+            <i class="bi bi-list-ul" style="color:#6a6a6a;"></i>
+            <span style="font-size:13px; color:#555;">
+              ${loc.type}
+            </span>
+          </div>
+    
+          <!-- Directions Button -->
+          <a 
+            href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.address)}"
+            target="_blank"
+            style="
+              display:block;
+              margin-top:8px;
+              background:#1a73e8;
+              color:white !important;
+              text-align:center;
+              padding:8px 10px;
+              text-decoration:none;
+              border-radius:6px;
+              font-size:13px;
+              font-weight:600;
+            "
+          >
+            <i class="bi bi-arrow-up-right-circle"></i>
+            Get Directions
+          </a>
         </div>
       `;
+    
       locationsInfoWindow.setContent(infoHtml);
       locationsInfoWindow.open(locationsMap, marker);
       highlightLocationCard(loc.id);
@@ -1091,6 +1389,10 @@ function renderLocationCards(items) {
             </div>
 
             <div class="location-card-footer">
+              <div class="location-distance small text-muted mb-2" data-distance-for="${loc.id}">
+                <i class="bi bi-geo-alt"></i>
+                <span>Turn on location and click "Get directions" to see distance &amp; time.</span>
+              </div>
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <button
                   type="button"
@@ -1116,6 +1418,15 @@ function renderLocationCards(items) {
       `;
     })
     .join("");
+
+  // if we already had a route for a location, re-apply its distance text
+  if (lastRouteInfo && lastRouteInfo.locationId) {
+    updateLocationDistanceUI(
+      lastRouteInfo.locationId,
+      lastRouteInfo.distanceText,
+      lastRouteInfo.durationText
+    );
+  }
 }
 
 function setupLocationFilters() {
@@ -1165,12 +1476,23 @@ function applyLocationFilter() {
 function setupLocationCardClicks() {
   if (!locationsCardsContainer) return;
 
-  // clicks (view on map, review toggle, whole card)
+  // clicks (view on map, review toggle, directions, whole card)
   locationsCardsContainer.addEventListener("click", (e) => {
     const viewBtn = e.target.closest(".view-on-map-btn");
     if (viewBtn) {
       const id = viewBtn.dataset.locationId;
       focusLocationOnMap(id);
+      return;
+    }
+
+    const directionsLink = e.target.closest(".location-directions-link");
+    if (directionsLink) {
+      e.preventDefault();
+      const card = directionsLink.closest(".location-card");
+      const id = card ? card.getAttribute("data-location-id") : null;
+      if (id) {
+        routeFromUserToLocation(id);
+      }
       return;
     }
 
