@@ -29,33 +29,15 @@
     const CURRENT_PAGE = "locations";
 
     fetch("navbar.html")
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById("navbar-container").innerHTML = html;
-
-    // Highlight active nav link
-    const activeLink = document.querySelector(
-      `.gw-nav-link[data-page="${CURRENT_PAGE}"]`
-    );
-    if (activeLink) activeLink.classList.add("active");
-
-    // Cart logic
-    if (window.setupCartOffcanvasEvents) {
-      window.setupCartOffcanvasEvents();
-    }
-    if (window.updateCartCountDisplay) {
-      window.updateCartCountDisplay();
-    }
-    if (window.renderCartPanel) {
-      window.renderCartPanel();
-    }
-
-    // ✅ NOW that navbar exists, set up login/profile UI
-    if (window.setupAuthUI) {
-      window.setupAuthUI();
-    }
-  })
-  .catch(err => console.error("Error loading navbar:", err));
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar-container").innerHTML = html;
+        const activeLink = document.querySelector(
+          `.gw-nav-link[data-page="${CURRENT_PAGE}"]`
+        );
+        if (activeLink) activeLink.classList.add("active");
+      })
+      .catch(err => console.error("Navbar load error:", err));
   </script>
 
   <main>
@@ -70,13 +52,18 @@
       <!-- Dark overlay -->
       <div class="locations-hero-overlay"></div>
 
-      <!-- Text on top of map -->
-      <div class="locations-hero-content position-relative">
-        <h1 class="display-4 fw-light mb-3"> </h1>
-        <hr class="hero-divider mx-auto mb-3" />
-        <p class="lead mb-0">
-          
-        </p>
+      <!-- NEW: controls overlayed on the map -->
+      <div class="locations-hero-inner container position-relative">
+        <div class="d-flex justify-content-end pt-3">
+          <button
+            id="locateMeBtn"
+            class="btn btn-light btn-sm shadow-sm"
+            type="button"
+          >
+            <i class="bi bi-geo-alt-fill me-1"></i>
+            Use my location
+          </button>
+        </div>
       </div>
     </section>
 
@@ -139,7 +126,7 @@
       .catch(err => console.error("Footer load error:", err));
   </script>
 
-  <!-- Main JS (cart + menus + map + cards + reviews) -->
+  <!-- Main JS (cart + menus + map + cards + reviews + location/directions) -->
   <script src="main.js"></script>
 
   <!-- Google Maps API (uses initGWMap defined in main.js) -->
